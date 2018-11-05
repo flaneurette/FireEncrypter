@@ -1,0 +1,8 @@
+<!ENTITY fireencrypter.label "Your localized menuitem">
+<!ENTITY fireencrypterContext.label "Your Menuitem">
+<!ENTITY fireencrypterContext.accesskey "Y">
+<!ENTITY fireencrypterToolbarButton.label "Your Toolbar Button">
+<!ENTITY fireencrypterToolbarButton.tooltip "This is your toolbar button!">
+<!ENTITY fireencrypterSidebar.label "Your Sidebar">
+<!ENTITY fireencrypterToolbar.name  "example">
+<!ENTITY fireencrypterToolbar.label "This is an example toolbar. You can hide it under View &gt; toolbars &gt; &fireencrypterToolbar.name;">

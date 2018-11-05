@@ -1,0 +1,7 @@
+content fireencrypter content/fireencrypter/
+
+overlay chrome://browser/content/browser.xul chrome://fireencrypter/content/fireencrypter.xul
+
+skin fireencrypter classic/1.0 skin/classic/fireencrypter/
+style chrome://browser/content/browser.xul chrome://fireencrypter/skin/fireencrypter.css
+style chrome://global/content/customizeToolbar.xul chrome://fireencrypter/skin/fireencrypter.css

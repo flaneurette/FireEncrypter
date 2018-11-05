@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://fireencrypter/skin/fireencrypter.css" type="text/css"?>
+<window title="Fire Encrypter" id="fireencwindow" onload="window.focus();" xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    <script src="fireencrypterOverlay.js" />
+    <tabbox style="margin:1px;">
+        <tabs>
+            <tab label="Hashing" />
+            <tab label="Checksum" />
+            <tab label="Password" />
+            <tab label="AES" />
+            <tab label="Vigenere" />
+            <tab label="OTP" />
+            <tab label="Affine" />
+            <tab label="Rail Fence" />
+            <tab label="XOR" />
+            <tab label="Caesar" />
+            <tab label="Morse" />
+        </tabs>
+        <tabpanels>
+            <tabpanel id="Hashing">
+                <groupbox class="fegroup">
+                  
+                    <label value="Text to Hash" />
+                    <textbox id="MD5" name="MD5" size="15" onkeyup="hashstring(this.value,'MD2','hash1');hashstring(this.value,'MD5','hash2');hashstring(this.value,'SHA1','hash3');hashstring(this.value,'SHA256','hash4');hashstring(this.value,'SHA384','hash5');hashstring(this.value,'SHA512','hash6');" />
+                </groupbox>
+                <groupbox class="fegroup"  flex="3">
+                    
+                    <label value="MD2" />
+                    <textbox id="hash1" name="hash1"/>
+                    <label value="MD5" />
+                    <textbox id="hash2" name="hash2"  />
+                    <label value="SHA1" />
+                    <textbox id="hash3" name="hash3" />
+                    <label value="SHA256" />
+                    <textbox id="hash4" name="hash4" />
+                    <label value="SHA384" />
+                    <textbox id="hash5" name="hash5"  />
+                    <label value="SHA512" />
+                    <textbox id="hash6" name="hash6"  />
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="Checksum">
+                <groupbox class="fegroup">
+                   
+                    <menulist id="hashact" cols="2">
+                        <menupopup>
+                            <menuitem label="Hash engine..." value="MD5" />
+                            <menuitem label="MD2" value="MD2" />
+                            <menuitem label="MD5" value="MD5" />
+                            <menuitem label="SHA1" value="SHA1" />
+                            <menuitem label="SHA256" value="SHA256" />
+                            <menuitem label="SHA384" value="SHA384" />
+                            <menuitem label="SHA512" value="SHA512" />
+                        </menupopup>
+                    </menulist>
+                    <button class="pfb" label="Browse..." value="Browse..." oncommand="computehash();" />
+                </groupbox>
+                <groupbox class="fegroup" flex="3">
+                    
+                    <textbox id="checksumresult" name="checksumresult" rows="17" cols="94" multiline="true" />
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="Password">
+                <groupbox class="fegroup">
+                  
+                    <menulist id="Method" oncommand="CheckMethod(this.value);">
+                        <menupopup>
+                            <menuitem label="Strong Mixed" value="1" />
+                            <menuitem label="Alpha Numeric" value="4" />
+                            <menuitem label="Numeric" value="0" />
+                            <menuitem label="Alpha" value="3" />
+                            <menuitem label="Hexadecimal" value="2" />
+                            <menuitem label="PRNG" value="5" />
+                        </menupopup>
+                    </menulist>
+                    <menulist id="Pass" oncommand="CountChars(this.value);" cols="2">
+                        <menupopup>
+                            <menuitem label="  8 chars" value="8" />
+                            <menuitem label=" 12 chars" value="12" />
+                            <menuitem label=" 16 chars" value="16" />
+                            <menuitem label=" 32 chars" value="32" />
+                            <menuitem label=" 64 chars" value="64" />
+                            <menuitem label="128 chars" value="128" />
+                            <menuitem label="256 chars" value="256" />
+                            <menuitem label="512 chars" value="512" />
+                            <menuitem label="1024 chars" value="1024" />
+                        </menupopup>
+                    </menulist>
+                    <button label="Generate" value="Generate Mixed Password" oncommand="generate_password(NumChars,'PassChars',PassMethod);" />
+                </groupbox>
+                <groupbox class="fegroup"  flex="3">
+                    
+                    <textbox id="PassChars" name="PassChars" rows="17" cols="94" multiline="true" />
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="AES">
+                <groupbox class="fegroup">
+                   
+                    <label value="Password" />
+                    <textbox id="spanId" name="spanId" size="16" onkeyup="GG(this.value);" />
+                </groupbox>
+                <groupbox class="fegroup"  flex="3">
+                    
+                    <label value="Plaintext" />
+                    <textbox id="Plaintext" name="Plaintext" rows="6"   multiline="true" cols="40" onkeyup="AESE(this.value, passX);" />
+                    <label value="Ciphertext" />
+                    <textbox id="Plaintext" name="Plaintext" rows="6"  multiline="true" cols="40" onkeyup="AESD(this.value,passX);" />
+                </groupbox>
+                <groupbox class="fegroup"  flex="3" >
+                    
+                    <label value="Ciphertext" />
+                    <textbox id="a1" name="a1" multiline="true"  rows="6" cols="40" />
+                    <label value="Plaintext" />
+                    <textbox id="a2" name="a2" multiline="true"   rows="6" cols="40" />
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="Vigenere">
+                <groupbox class="fegroup">
+                 
+                    <label value="Keyword" />
+                    <textbox id="Key" name="Key" size="16" onkeyup="ShowKey(this.value);" />
+                </groupbox>
+                <groupbox class="fegroup">
+                    
+                    <label value="Plaintext" />
+                    <textbox id="Plaintext" name="Plaintext" rows="6" multiline="true" cols="40" onkeyup="VigenereEncrypt(NewKey,this.value);" />
+                    <label value="Ciphertext" />
+                    <textbox id="Ciphertext" name="Ciphertext" rows="6" multiline="true" cols="40" onkeyup="VigenereDecrypt(NewKey,this.value);" />
+                </groupbox>
+                <groupbox class="fegroup"  flex="3">
+                    
+                    <label value="Ciphertext" />
+                    <textbox id="VigenereEncrypted" name="VigenereEncrypted" multiline="true" rows="6" cols="40" />
+                    <label value="Plaintext" />
+                    <textbox id="VigenereDecrypted" name="VigenereDecrypted" multiline="true" rows="6" cols="40" />
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="OTP">
+                <groupbox class="fegroup"  flex="1" >
+                  
+                    <label value="Pad" />
+                    <textbox id="KeyPad" name="KeyPad" size="16" onkeyup="KeyPad(this.value);" />
+                </groupbox>
+                <groupbox class="fegroup"  flex="2" >
+                   
+                    <label value="Plaintext" />
+                    <textbox id="Plaintext" name="Plaintext" rows="6" multiline="true" cols="40" onkeyup="OneTimePad('1',this.value,KeyPads);" />
+                    <label value="Ciphertext" />
+                    <textbox id="Ciphertext" name="Ciphertext" rows="6" multiline="true" cols="40" onkeyup="OneTimePad('-1',this.value,KeyPads);" />
+                </groupbox>
+                <groupbox class="fegroup"  flex="2" >
+                    
+                    <label value="Ciphertext" />
+                    <textbox id="OTPE" name="VigenereEncrypted" multiline="true" rows="6" cols="40" />
+                    <label value="Plaintext" />
+                    <textbox id="OTPD" name="VigenereDecrypted" multiline="true" rows="6" cols="40" />
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="Affine">
+                <groupbox class="fegroup">
+                   
+                    <label value="Multiply" size="16" />
+                    <menulist id="Multiply" oncommand="Multiply(this.value);">
+                        <menupopup>
+                            <menuitem label="Pick..." value="" />
+                            <menuitem label="1" value="1" />
+                            <menuitem label="2" value="2" />
+                            <menuitem label="3" value="3" />
+                            <menuitem label="4" value="4" />
+                            <menuitem label="5" value="5" />
+                            <menuitem label="6" value="6" />
+                            <menuitem label="7" value="7" />
+                            <menuitem label="8" value="8" />
+                            <menuitem label="9" value="9" />
+                        </menupopup>
+                    </menulist>
+                    <label value="Add" />
+                    <menulist id="Add" oncommand="Add(this.value);">
+                        <menupopup>
+                            <menuitem label="Pick..." value="" />
+                            <menuitem label="1" value="1" />
+                            <menuitem label="2" value="2" />
+                            <menuitem label="3" value="3" />
+                            <menuitem label="4" value="4" />
+                            <menuitem label="5" value="5" />
+                            <menuitem label="6" value="6" />
+                            <menuitem label="7" value="7" />
+                            <menuitem label="8" value="8" />
+                            <menuitem label="9" value="9" />
+                        </menupopup>
+                    </menulist>
+                </groupbox>
+                <groupbox class="fegroup"  flex="2" >
+                    
+                    <label value="Plaintext" />
+                    <textbox id="Plaintext" name="Plaintext" rows="6" multiline="true" cols="45" onkeyup="AffineEncrypt(this.value,MultiplyResult,AddResult);" />
+                    <label value="Ciphertext" />
+                    <textbox id="Ciphertext" name="Ciphertext" rows="6" multiline="true" cols="45" onkeyup="AffineDecrypt(this.value,MultiplyResult,AddResult);" />
+                </groupbox>
+                <groupbox class="fegroup"  flex="2" >
+                    
+                    <label value="Ciphertext" />
+                    <textbox id="AffineEncrypted" name="AffineEncrypted" multiline="true" rows="6" cols="45" />
+                    <label value="Plaintext" />
+                    <textbox id="AffineDecrypted" name="AffineDecrypted" multiline="true" rows="6" cols="45" />
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="Rail Fence">
+                <groupbox class="fegroup">
+                    
+                    <label value="Depth" />
+                    <menulist id="Depth" oncommand="SetDepth(this.value);">
+                        <menupopup>
+                            <menuitem label="Pick..." value="" />
+                            <menuitem label="1" value="1" />
+                            <menuitem label="2" value="2" />
+                            <menuitem label="3" value="3" />
+                            <menuitem label="4" value="4" />
+                            <menuitem label="5" value="5" />
+                            <menuitem label="6" value="6" />
+                            <menuitem label="7" value="7" />
+                            <menuitem label="8" value="8" />
+                            <menuitem label="9" value="9" />
+                        </menupopup>
+                    </menulist>
+                    <label value="Offset" />
+                    <menulist id="Offset" oncommand="SetOffset(this.value);">
+                        <menupopup>
+                            <menuitem label="Pick..." value="" />
+                            <menuitem label="1" value="1" />
+                            <menuitem label="2" value="2" />
+                            <menuitem label="3" value="3" />
+                            <menuitem label="4" value="4" />
+                            <menuitem label="5" value="5" />
+                            <menuitem label="6" value="6" />
+                            <menuitem label="7" value="7" />
+                            <menuitem label="8" value="8" />
+                            <menuitem label="9" value="9" />
+                        </menupopup>
+                    </menulist>
+                </groupbox>
+                <groupbox class="fegroup"  flex="2" >
+                    
+                    <label value="Plaintext" />
+                    <textbox id="Plaintext" name="Plaintext" rows="6" multiline="true" cols="45" onkeyup="RFEncrypt(this.value,Depth,Offset);" />
+                    <label value="Ciphertext" />
+                    <textbox id="Ciphertext" name="Ciphertext" rows="6" multiline="true" cols="45" onkeyup="RFDecrypt(this.value,Depth,Offset);" />
+                </groupbox>
+                <groupbox class="fegroup"  flex="2">
+                    
+                    <label value="Ciphertext" />
+                    <textbox id="RFE" name="RFE" multiline="true" rows="6" cols="45" />
+                    <label value="Plaintext" />
+                    <textbox id="RFD" name="RFD" multiline="true" rows="6" cols="45" />
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="XOR">
+                <groupbox class="fegroup">
+                    
+                    <label value="Key" />
+                    <menulist id="X" oncommand="GetXor(this.value);">
+                        <menupopup>
+                            <menuitem label="Pick..." value="" />
+                            <menuitem label="1" value="1" />
+                            <menuitem label="2" value="2" />
+                            <menuitem label="3" value="3" />
+                            <menuitem label="4" value="4" />
+                            <menuitem label="5" value="5" />
+                            <menuitem label="6" value="6" />
+                            <menuitem label="7" value="7" />
+                            <menuitem label="8" value="8" />
+                            <menuitem label="9" value="9" />
+                        </menupopup>
+                    </menulist>
+                </groupbox>
+                <groupbox class="fegroup"  flex="2" >
+                    
+                    <label value="Plaintext" />
+                    <textbox id="Plaintext" name="Plaintext" rows="6" multiline="true" cols="45" onkeyup="xorencode(this.value,XorX);" />
+                    <label value="Ciphertext" />
+                    <textbox id="Ciphertext" name="Ciphertext" rows="6" multiline="true" cols="45" onkeyup="xordecode(this.value,XorX);" />
+                </groupbox>
+                <groupbox class="fegroup"  flex="2" >
+                    
+                    <label value="Ciphertext" />
+                    <textbox id="XorEncoded" name="XorEncoded" multiline="true" rows="6" cols="45" />
+                    <label value="Plaintext" />
+                    <textbox id="XorDecoded" name="XorDecoded" multiline="true" rows="6" cols="45" />
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="Caesar">
+                <groupbox class="fegroup"  flex="2" >
+                    
+                    <label value="Plaintext"  />
+                    <textbox id="Plaintext" name="Plaintext" rows="6" multiline="true" cols="49" onkeyup="Caesar(this.value);" />
+                    <label value="Ciphertext" />
+                    <textbox id="Ciphertext" name="Ciphertext" rows="6" multiline="true" cols="49" onkeyup="Caesar(this.value);" />
+                </groupbox>
+                <groupbox class="fegroup"  flex="2" >
+                    
+                    <label value="Output" />
+                    <textbox id="CaesarOutput" name="CaesarOutput" multiline="true" rows="16" cols="57" />
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="Morse">
+                <groupbox class="fegroup"  flex="2" >
+                    
+                    <label value="Plaintext" />
+                    <textbox id="Plaintext" name="Plaintext" multiline="true" rows="6" cols="119" onkeyup="Morse(this.value);" />
+                    <label value="Result" />
+                    <textbox id="MorseResult" name="MorseResult" multiline="true" rows="6" cols="119" />
+                </groupbox>
+            </tabpanel>
+        </tabpanels>
+    </tabbox>
+
+</window>

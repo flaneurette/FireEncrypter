@@ -1,0 +1,97 @@
+/* Toolbar icons */
+#fireencrypter-button {
+	list-style-image: url("chrome://fireencrypter/skin/icon_large.png");
+}
+
+toolbar[iconsize="small"] #fireencrypter-button {
+	list-style-image: url("chrome://fireencrypter/skin/icon_small.png");
+}
+
+.fegroup {
+	-moz-appearance: none !important;
+}
+
+
+#fireencwindow {
+	padding:2px;
+	color:#000;
+	background-color:#898989;
+	border:1px solid #ccc;
+}
+
+
+#fireencwindow tabbox {
+	-moz-appearance: none;
+	-moz-border-radius: 0.4em;
+	color:#000;
+	background-color:#898989;
+	padding:7px;
+}
+#fireencwindow tabpanels, #fireencwindow tabpanel {
+	-moz-appearance: none;
+	color:#000;
+	border:0px solid;
+	background-color:#d6d6d6;
+}
+#fireencwindow tab {
+	-moz-appearance: none;
+	-moz-border-radius: 0.2em 0.2em 0em 0em;
+	color:#333;
+	padding:7px;
+	padding-top:4px;
+	padding-bottom:4px;
+	margin:0px;
+	background-color:#989898;
+	border:0px solid;
+	border-top:1px solid #999;
+	border-right:1px solid #666;
+}
+
+#fireencwindow tab[selected="true"] {
+	-moz-appearance: none;
+	-moz-border-radius: 0.2em 0.2em 0em 0em;
+	color:#000;
+	padding:7px;
+	padding-top:4px;
+	padding-bottom:4px;
+	margin:0px;
+	margin-right:1px;
+	background-color:#d6d6d6;
+	border:0px solid;
+	border-top:1px solid #fff;
+	background: -moz-linear-gradient(top, #ffffff, #d7d7d7);	
+}
+
+#fireencwindow groupbox {
+	-moz-appearance: none;
+	color:#000;
+	padding:3px;
+	background-color:#d6d6d6;
+	border:0px solid;
+}
+
+#fireencwindow button {
+	-moz-appearance: none;
+	-moz-border-radius: 0.2em 0.2em 0.2em 0.2em;
+	color:#000;
+	padding:2px;
+	background-color:#d6d6d6;
+	border:0px solid;
+	border:1px solid #c3c3c3;
+	background: -moz-linear-gradient(top, #ffffff, #d7d7d7);
+}
+#fireencwindow button:hover {
+	-moz-appearance: none;
+	-moz-border-radius: 0.2em 0.2em 0.2em 0.2em;
+	color:#000;
+	padding:2px;
+	background-color:#d6d6d6;
+	border:0px solid;
+	border:1px solid #666;
+	background: -moz-linear-gradient(top, #d9d9d9, #898989);
+}
+
+#fireencwindow caption {
+	-moz-appearance: none;
+	background-color:#d6d6d6;
+}
