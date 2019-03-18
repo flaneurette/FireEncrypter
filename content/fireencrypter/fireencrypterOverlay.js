@@ -2,8 +2,7 @@
 	FIRE ENCRYPTER BUILD 2.9 / 3.0 / 5.0
 	Created: September 2007
 	Last Update: 05 October 2011
-	By Sasha van den Heetkamp
-	http://sun.io
+	By Alexandra van den Heetkamp.
 */
 
 (function (global) {
@@ -290,7 +289,7 @@
 		return output;
 	}
 	
-	function SubBytes(s, Nb) { // apply SBox to state S [ง5.1.1]
+	function SubBytes(s, Nb) { // apply SBox to state S [ยง5.1.1]
 		for (var r = 0; r < 4; r++) {
 			for (var c = 0; c < Nb; c++) s[r][c] = Sbox[s[r][c]];
 		}
@@ -376,7 +375,7 @@
 		var pwKeySchedule = KeyExpansion([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]);
 		var key = Cipher(pwBytes, pwBytes, pwKeySchedule);
 	
-		// initialise counter block (NIST SP800-38A งB.2)
+		// initialise counter block (NIST SP800-38A ยงB.2)
 		var counterBlock = new Array(16);
 		var nonce = (new Date()).getTime();
 		for (var i = 0; i < 8; i++) counterBlock[i] = (nonce >>> i * 8) & 0xff;
